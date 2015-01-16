@@ -19,27 +19,108 @@
 
 #include "SonosUPnP.h"
 
+// Store string arrays in program memory (ROM instead of RAM)
+const char p_HttpVersion[] PROGMEM = HTTP_VERSION;
+const char p_HeaderHost[] PROGMEM = HEADER_HOST;
+const char p_HeaderContentType[] PROGMEM = HEADER_CONTENT_TYPE;
+const char p_HeaderContentLength[] PROGMEM = HEADER_CONTENT_LENGTH;
+const char p_HeaderSoapAction[] PROGMEM = HEADER_SOAP_ACTION;
+const char p_HeaderConnection[] PROGMEM = HEADER_CONNECTION;
+
+const char p_SoapEnvelopeStart[] PROGMEM = SOAP_ENVELOPE_START;
+const char p_SoapEnvelopeEnd[] PROGMEM = SOAP_ENVELOPE_END;
+const char p_SoapBodyStart[] PROGMEM = SOAP_BODY_START;
+const char p_SoapBodyEnd[] PROGMEM = SOAP_BODY_END;
+
+const char p_UpnpUrnSchema[] PROGMEM = UPNP_URN_SCHEMA;
+const char p_UpnpAvTransportService[] PROGMEM = UPNP_AV_TRANSPORT_SERVICE;
+const char p_UpnpAvTransportEndpoint[] PROGMEM = UPNP_AV_TRANSPORT_ENDPOINT;
+const char p_UpnpRenderingControlService[] PROGMEM = UPNP_RENDERING_CONTROL_SERVICE;
+const char p_UpnpRenderingControlEndpoint[] PROGMEM = UPNP_RENDERING_CONTROL_ENDPOINT;
+const char p_UpnpDevicePropertiesService[] PROGMEM = UPNP_DEVICE_PROPERTIES_SERVICE;
+const char p_UpnpDevicePropertiesEndpoint[] PROGMEM = UPNP_DEVICE_PROPERTIES_ENDPOINT;
+
+const char p_InstenceId0[] PROGMEM = SONOS_INSTANCE_ID_0;
+const char p_SavedQueues[] PROGMEM = SONOS_SAVED_QUEUES;
+const char p_TimeFormatTemplate[] PROGMEM = SONOS_TIME_FORMAT_TEMPLATE;
+const char p_SourceRinconTemplate[] PROGMEM = SONOS_SOURCE_RINCON_TEMPLATE;
+
+const char p_UriMetaLightStart[] PROGMEM = SONOS_URI_META_LIGHT_START;
+const char p_UriMetaLightEnd[] PROGMEM = SONOS_URI_META_LIGHT_END;
+const char p_RadioMetaFullStart[] PROGMEM = SONOS_RADIO_META_FULL_START;
+const char p_RadioMetaFullEnd[] PROGMEM = SONOS_RADIO_META_FULL_END;
+const char p_PlaylistMetaLightStart[] PROGMEM = SONOS_PLAYLIST_META_LIGHT_START;
+const char p_PlaylistMetaLightEnd[] PROGMEM = SONOS_PLAYLIST_META_LIGHT_END;
+
+const char p_GetTransportInfoA[] PROGMEM = SONOS_TAG_GET_TRANSPORT_INFO;
+const char p_GetTransportSettingsA[] PROGMEM = SONOS_TAG_GET_TRANSPORT_SETTINGS;
+const char p_GetPositionInfoA[] PROGMEM = SONOS_TAG_GET_POSITION_INFO;
+const char p_GetMuteA[] PROGMEM = SONOS_TAG_GET_MUTE;
+const char p_GetVolumeA[] PROGMEM = SONOS_TAG_GET_VOLUME;
+const char p_GetOutputFixedA[] PROGMEM = SONOS_TAG_GET_OUTPUT_FIXED;
+const char p_GetBassA[] PROGMEM = SONOS_TAG_GET_BASS;
+const char p_GetTrebleA[] PROGMEM = SONOS_TAG_GET_TREBLE;
+const char p_GetLoudnessA[] PROGMEM = SONOS_TAG_GET_LOUDNESS;
+const char p_SetAVTransportURI[] PROGMEM = SONOS_TAG_SET_AV_TRANSPORT_URI;
+const char p_SetPlayMode[] PROGMEM = SONOS_TAG_SET_PLAY_MODE;
+const char p_SetMute[] PROGMEM = SONOS_TAG_SET_MUTE;
+const char p_SetVolume[] PROGMEM = SONOS_TAG_SET_VOLUME;
+const char p_SetBass[] PROGMEM = SONOS_TAG_SET_BASS;
+const char p_SetTreble[] PROGMEM = SONOS_TAG_SET_TREBLE;
+const char p_SetLoudness[] PROGMEM = SONOS_TAG_SET_LOUDNESS;
+const char p_SetLEDState[] PROGMEM = SONOS_TAG_SET_LED_STATE;
+const char p_Play[] PROGMEM = SONOS_TAG_PLAY;
+const char p_Stop[] PROGMEM = SONOS_TAG_STOP;
+const char p_Pause[] PROGMEM = SONOS_TAG_PAUSE;
+const char p_Next[] PROGMEM = SONOS_TAG_NEXT;
+const char p_Previous[] PROGMEM = SONOS_TAG_PREVIOUS;
+const char p_Seek[] PROGMEM = SONOS_TAG_SEEK;
+const char p_AddURIToQueue[] PROGMEM = SONOS_TAG_ADD_URI_TO_QUEUE;
+const char p_RemoveAllTracksFromQueue[] PROGMEM = SONOS_TAG_REMOVE_ALL_TRACKS_FROM_QUEUE;
+const char p_BecomeCoordinatorOfStandaloneGroup[] PROGMEM = SONOS_TAG_BECOME_COORDINATOR_OF_STANDALONE_GROUP;
+
+const char p_ChannelTagStart[] PROGMEM = SONOS_CHANNEL_TAG_START;
+const char p_ChannelTagEnd[] PROGMEM = SONOS_CHANNEL_TAG_END;
+const char p_SeekModeTagStart[] PROGMEM = SONOS_SEEK_MODE_TAG_START;
+const char p_SeekModeTagEnd[] PROGMEM = SONOS_SEEK_MODE_TAG_END;
+
+const char p_SoapEnvelope[] PROGMEM = SONOS_TAG_ENVELOPE;
+const char p_SoapBody[] PROGMEM = SONOS_TAG_BODY;
+const char p_GetTransportInfoR[] PROGMEM = SONOS_TAG_GET_TRANSPORT_INFO_RESPONSE;
+const char p_GetTransportSettingsR[] PROGMEM = SONOS_TAG_GET_TRANSPORT_SETTINGS_RESPONSE;
+const char p_GetPositionInfoR[] PROGMEM = SONOS_TAG_GET_POSITION_INFO_RESPONSE;
+const char p_GetMuteR[] PROGMEM = SONOS_TAG_GET_MUTE_RESPONSE;
+const char p_GetVolumeR[] PROGMEM = SONOS_TAG_GET_VOLUME_RESPONSE;
+const char p_GetOutputFixedR[] PROGMEM = SONOS_TAG_GET_FIXED_RESPONSE;
+const char p_GetBassR[] PROGMEM = SONOS_TAG_GET_BASS_RESPONSE;
+const char p_GetTrebleR[] PROGMEM = SONOS_TAG_GET_TREBLE_RESPONSE;
+const char p_GetLoudnessR[] PROGMEM = SONOS_TAG_GET_LOUDNESS_RESPONSE;
+const char p_CurrentTransportState[] PROGMEM = SONOS_TAG_CURRENT_TRANSPORT_STATE;
+const char p_PlayMode[] PROGMEM = SONOS_TAG_PLAY_MODE;
+const char p_Track[] PROGMEM = SONOS_TAG_TRACK;
+const char p_TrackURI[] PROGMEM = SONOS_TAG_TRACK_URI;
+const char p_TrackDuration[] PROGMEM = SONOS_TAG_TRACK_DURATION;
+const char p_RelTime[] PROGMEM = SONOS_TAG_REL_TIME;
+const char p_CurrentMute[] PROGMEM = SONOS_TAG_CURRENT_MUTE;
+const char p_CurrentVolume[] PROGMEM = SONOS_TAG_CURRENT_VOLUME;
+const char p_CurrentFixed[] PROGMEM = SONOS_TAG_CURRENT_FIXED;
+const char p_CurrentBass[] PROGMEM = SONOS_TAG_CURRENT_BASS;
+const char p_CurrentTreble[] PROGMEM = SONOS_TAG_CURRENT_TREBLE;
+const char p_CurrentLoudness[] PROGMEM = SONOS_TAG_CURRENT_LOUDNESS;
+
 SonosUPnP::SonosUPnP(EthernetClient client, void (*ethernetErrCallback)(void))
 {
   #ifndef SONOS_WRITE_ONLY_MODE
-  this->xPath = MicroXPath();
+  this->xPath = MicroXPath_P();
   #endif
   this->ethClient = client;
   this->ethernetErrCallback = ethernetErrCallback;
 }
 
 
-void SonosUPnP::setAVTransportURI(IPAddress speakerIP, const char *uri)
+void SonosUPnP::setAVTransportURI(IPAddress speakerIP, const char *scheme, const char *address)
 {
-  setAVTransportURI(speakerIP, uri, "<CurrentURIMetaData></CurrentURIMetaData>");
-}
-
-void SonosUPnP::setAVTransportURI(IPAddress speakerIP, const char *uri, const char *uriMetaData)
-{
-  upnpSet(
-    speakerIP, UPNP_AV_TRANSPORT,
-    // Info to show in player, in DIDL format, can be added as META data
-    "SetAVTransportURI", "CurrentURI", uri, uriMetaData);
+  setAVTransportURI(speakerIP, scheme, address, p_UriMetaLightStart, p_UriMetaLightEnd, "");
 }
 
 void SonosUPnP::seekTrack(IPAddress speakerIP, uint16_t index)
@@ -52,7 +133,7 @@ void SonosUPnP::seekTrack(IPAddress speakerIP, uint16_t index)
 void SonosUPnP::seekTime(IPAddress speakerIP, uint8_t hour, uint8_t minute, uint8_t second)
 {
   char time[11];
-  sprintf(time, "%d:%02d:%02d", hour, minute, second);
+  sprintf_P(time, p_TimeFormatTemplate, hour, minute, second);
   seek(speakerIP, SONOS_SEEK_MODE_REL_TIME, time);
 }
 
@@ -74,92 +155,81 @@ void SonosUPnP::setPlayMode(IPAddress speakerIP, uint8_t playMode)
       playModeValue = SONOS_PLAY_MODE_NORMAL_VALUE;
       break;
   }
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, "SetPlayMode", "NewPlayMode", playModeValue);
+  upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_SetPlayMode, SONOS_TAG_NEW_PLAY_MODE, playModeValue);
 }
 
 void SonosUPnP::play(IPAddress speakerIP)
 {
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, "Play", "Speed", "1");
+  upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_Play, SONOS_TAG_SPEED, "1");
 }
 
-void SonosUPnP::playFile(IPAddress speakerIP, const char *uri)
+void SonosUPnP::playFile(IPAddress speakerIP, const char *address)
 {
-  char ruri[301];
-  sprintf(ruri, "%s%s", SONOS_SOURCE_FILE_PREFIX, uri);
-  setAVTransportURI(speakerIP, ruri, SONOS_URI_META_LIGHT);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_FILE_SCHEMA, address);
   play(speakerIP);
 }
 
-void SonosUPnP::playHttp(IPAddress speakerIP, const char *uri)
+void SonosUPnP::playHttp(IPAddress speakerIP, const char *address)
 {
-  char ruri[301];
-  sprintf(ruri, "%s%s", SONOS_SOURCE_HTTP_PREFIX, uri);
-  setAVTransportURI(speakerIP, ruri, SONOS_URI_META_LIGHT);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_HTTP_SCHEMA, address);
   play(speakerIP);
 }
 
-void SonosUPnP::playRadio(IPAddress speakerIP, const char *uri, const char *title)
+void SonosUPnP::playRadio(IPAddress speakerIP, const char *address, const char *title)
 {
-  char ruri[201];
-  sprintf(ruri, "%s%s", SONOS_SOURCE_RADIO_PREFIX, uri);
-  char extra[701];
-  sprintf(extra, SONOS_RADIO_META_FULL, title);
-  setAVTransportURI(speakerIP, ruri, extra);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_RADIO_SCHEMA, address, p_RadioMetaFullStart, p_RadioMetaFullEnd, title);
   play(speakerIP);
 }
 
 void SonosUPnP::playLineIn(IPAddress speakerIP, const char *speakerID)
 {
-  char uri[42];
-  sprintf(uri, "%sRINCON_%s0%d", SONOS_SOURCE_LINEIN_PREFIX, speakerID, UPNP_PORT);
-  setAVTransportURI(speakerIP, uri);
+  char address[30];
+  sprintf_P(address, p_SourceRinconTemplate, speakerID, UPNP_PORT, "");
+  setAVTransportURI(speakerIP, SONOS_SOURCE_LINEIN_SCHEMA, address);
   play(speakerIP);
 }
 
 void SonosUPnP::playQueue(IPAddress speakerIP, const char *speakerID)
 {
-  char uri[42];
-  sprintf(uri, "%sRINCON_%s0%d#0", SONOS_SOURCE_QUEUE_PREFIX, speakerID, UPNP_PORT);
-  setAVTransportURI(speakerIP, uri);
+  char address[30];
+  sprintf_P(address, p_SourceRinconTemplate, speakerID, UPNP_PORT, "#0");
+  setAVTransportURI(speakerIP, SONOS_SOURCE_QUEUE_SCHEMA, address);
   play(speakerIP);
 }
 
 void SonosUPnP::playConnectToMaster(IPAddress speakerIP, const char *masterSpeakerID)
 {
-  char uri[35];
-  sprintf(uri, "%sRINCON_%s0%d", SONOS_SOURCE_MASTER_PREFIX, masterSpeakerID, UPNP_PORT);
-  setAVTransportURI(speakerIP, uri);
+  char address[30];
+  sprintf_P(address, p_SourceRinconTemplate, masterSpeakerID, UPNP_PORT, "");
+  setAVTransportURI(speakerIP, SONOS_SOURCE_MASTER_SCHEMA, address);
 }
 
 void SonosUPnP::disconnectFromMaster(IPAddress speakerIP)
 {
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, "BecomeCoordinatorOfStandaloneGroup");
+  upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_BecomeCoordinatorOfStandaloneGroup);
 }
 
 void SonosUPnP::stop(IPAddress speakerIP)
 {
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, "Stop");
+  upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_Stop);
 }
 
 void SonosUPnP::pause(IPAddress speakerIP)
 {
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, "Pause");
+  upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_Pause);
 }
 
 void SonosUPnP::skip(IPAddress speakerIP, uint8_t direction)
 {
   upnpSet(
-    speakerIP, UPNP_AV_TRANSPORT,
-    direction == SONOS_DIRECTION_FORWARD ? "Next" : "Previous");
+    speakerIP, UPNP_AV_TRANSPORT, direction == SONOS_DIRECTION_FORWARD ? p_Next : p_Previous);
 }
 
 void SonosUPnP::setMute(IPAddress speakerIP, bool state)
 {
-  char channel[26];
-  sprintf(channel, SONOS_CHANNEL_TEMPLATE, SONOS_CHANNEL_MASTER);
   upnpSet(
-    speakerIP, UPNP_RENDERING_CONTROL,
-    "SetMute", "DesiredMute", state ? "1" : "0", channel);
+    speakerIP, UPNP_RENDERING_CONTROL, p_SetMute,
+    SONOS_TAG_DESIRED_MUTE, state ? "1" : "0", "", p_ChannelTagStart, p_ChannelTagEnd, SONOS_CHANNEL_MASTER);
 }
 
 void SonosUPnP::setVolume(IPAddress speakerIP, uint8_t volume)
@@ -169,14 +239,12 @@ void SonosUPnP::setVolume(IPAddress speakerIP, uint8_t volume)
 
 void SonosUPnP::setVolume(IPAddress speakerIP, uint8_t volume, const char *channel)
 {
-  char channelBuffer[26];
-  sprintf(channelBuffer, SONOS_CHANNEL_TEMPLATE, channel);
   if (volume > 100) volume = 100;
   char volumeChar[4];
   itoa(volume, volumeChar, 10);
   upnpSet(
-    speakerIP, UPNP_RENDERING_CONTROL,
-    "SetVolume", "DesiredVolume", volumeChar, channelBuffer);
+    speakerIP, UPNP_RENDERING_CONTROL, p_SetVolume,
+    SONOS_TAG_DESIRED_VOLUME, volumeChar, "", p_ChannelTagStart, p_ChannelTagEnd, channel);
 }
 
 void SonosUPnP::setBass(IPAddress speakerIP, int8_t bass)
@@ -184,7 +252,9 @@ void SonosUPnP::setBass(IPAddress speakerIP, int8_t bass)
   bass = constrain(bass, -10, 10);
   char bassChar[4];
   itoa(bass, bassChar, 10);
-  upnpSet(speakerIP, UPNP_RENDERING_CONTROL, "SetBass", "DesiredBass", bassChar);
+  upnpSet(
+    speakerIP, UPNP_RENDERING_CONTROL, p_SetBass,
+    SONOS_TAG_DESIRED_BASS, bassChar);
 }
 
 void SonosUPnP::setTreble(IPAddress speakerIP, int8_t treble)
@@ -192,50 +262,37 @@ void SonosUPnP::setTreble(IPAddress speakerIP, int8_t treble)
   treble = constrain(treble, -10, 10);
   char trebleChar[4];
   itoa(treble, trebleChar, 10);
-  upnpSet(speakerIP, UPNP_RENDERING_CONTROL, "SetTreble", "DesiredTreble", trebleChar);
+  upnpSet(
+    speakerIP, UPNP_RENDERING_CONTROL, p_SetTreble,
+    SONOS_TAG_DESIRED_TREBLE, trebleChar);
 }
 
 void SonosUPnP::setLoudness(IPAddress speakerIP, bool state)
 {
-  char channel[26];
-  sprintf(channel, SONOS_CHANNEL_TEMPLATE, SONOS_CHANNEL_MASTER);
   upnpSet(
-    speakerIP, UPNP_RENDERING_CONTROL,
-    "SetLoudness", "DesiredLoudness", state ? "1" : "0", channel);
+    speakerIP, UPNP_RENDERING_CONTROL, p_SetLoudness,
+    SONOS_TAG_DESIRED_LOUDNESS, state ? "1" : "0", "", p_ChannelTagStart, p_ChannelTagEnd, SONOS_CHANNEL_MASTER);
 }
 
 void SonosUPnP::setStatusLight(IPAddress speakerIP, bool state)
 {
   upnpSet(
-    speakerIP, UPNP_DEVICE_PROPERTIES,
-    "SetLEDState", "DesiredLEDState", state ? "On" : "Off");
+    speakerIP, UPNP_DEVICE_PROPERTIES, p_SetLEDState,
+    SONOS_TAG_DESIRED_LED_STATE, state ? "On" : "Off");
 }
 
 void SonosUPnP::addPlaylistToQueue(IPAddress speakerIP, uint16_t playlistIndex)
 {
   char uri[45];
-  sprintf(uri, SONOS_SAVED_QUEUES, playlistIndex);
+  sprintf_P(uri, p_SavedQueues, playlistIndex);
   upnpSet(
-    speakerIP, UPNP_AV_TRANSPORT,
-    "AddURIToQueue", "EnqueuedURI", uri, SONOS_PLAYLIST_META_LIGHT);
+    speakerIP, UPNP_AV_TRANSPORT, p_AddURIToQueue,
+    SONOS_TAG_ENQUEUED_URI, uri, "", p_PlaylistMetaLightStart, p_PlaylistMetaLightEnd, "");
 }
-
-/*
-void SonosUPnP::addPlaylistToQueue(IPAddress speakerIP, uint16_t playlistIndex, const char *playlistName)
-{
-  char uri[45];
-  sprintf(uri, SONOS_SAVED_QUEUES, playlistIndex);
-  char extra[801];
-  sprintf(extra, SONOS_PLAYLIST_META_FULL, playlistName);
-  upnpSet(
-    speakerIP, UPNP_AV_TRANSPORT,
-    "AddURIToQueue", "EnqueuedURI", uri, extra);
-}
-*/
 
 void SonosUPnP::removeAllTracksFromQueue(IPAddress speakerIP)
 {
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, "RemoveAllTracksFromQueue");
+  upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_RemoveAllTracksFromQueue);
 }
 
 
@@ -294,18 +351,18 @@ void SonosUPnP::toggleLoudness(IPAddress speakerIP)
 
 uint8_t SonosUPnP::getState(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetTransportInfoResponse", "CurrentTransportState" };
-  //                   { "s:Envelope", "s:Body", "u:GetTransportInfoResponse", "CurrentSpeed" };
-  char result[sizeof(SONOS_STATE_PAUSED_VALUE) + 1] = "";
-  upnpAvTransportGet(speakerIP, "GetTransportInfo", path, 4, result, sizeof(result));
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetTransportInfoR, p_CurrentTransportState };
+  //             { p_SoapEnvelope, p_SoapBody, p_GetTransportInfoR, p_CurrentSpeed };
+  char result[sizeof(SONOS_STATE_PAUSED_VALUE)] = "";
+  upnpAvTransportGet(speakerIP, p_GetTransportInfoA, path, 4, result, sizeof(result));
   return convertState(result);
 }
 
 uint8_t SonosUPnP::getPlayMode(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetTransportSettingsResponse", "PlayMode" };
-  char result[sizeof(SONOS_PLAY_MODE_SHUFFLE_VALUE) + 1] = "";
-  upnpAvTransportGet(speakerIP, "GetTransportSettings", path, 4, result, sizeof(result));
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetTransportSettingsR, p_PlayMode };
+  char result[sizeof(SONOS_PLAY_MODE_SHUFFLE_VALUE)] = "";
+  upnpAvTransportGet(speakerIP, p_GetTransportSettingsA, path, 4, result, sizeof(result));
   return convertPlayMode(result);
 }
 
@@ -321,16 +378,16 @@ bool SonosUPnP::getShuffle(IPAddress speakerIP)
 
 uint16_t SonosUPnP::getTrackNumber(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetPositionInfoResponse", "Track" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_Track };
   char result[6] = "0";
-  upnpAvTransportGet(speakerIP, "GetPositionInfo", path, 4, result, sizeof(result));
+  upnpAvTransportGet(speakerIP, p_GetPositionInfoA, path, 4, result, sizeof(result));
   return atoi(result);
 }
 
 void SonosUPnP::getTrackURI(IPAddress speakerIP, char *resultBuffer, size_t resultBufferSize)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetPositionInfoResponse", "TrackURI" };
-  upnpAvTransportGet(speakerIP, "GetPositionInfo", path, 4, resultBuffer, resultBufferSize);
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackURI };
+  upnpAvTransportGet(speakerIP, p_GetPositionInfoA, path, 4, resultBuffer, resultBufferSize);
 }
 
 uint8_t SonosUPnP::getSource(IPAddress speakerIP)
@@ -342,23 +399,23 @@ uint8_t SonosUPnP::getSource(IPAddress speakerIP)
 
 uint8_t SonosUPnP::getSourceFromURI(const char *uri)
 {
-  if (!strncmp(SONOS_SOURCE_FILE_PREFIX, uri, sizeof(SONOS_SOURCE_FILE_PREFIX) - 1))
+  if (!strncmp(SONOS_SOURCE_FILE_SCHEMA, uri, sizeof(SONOS_SOURCE_FILE_SCHEMA) - 1))
   {
     return SONOS_SOURCE_FILE;
   }
-  if (!strncmp(SONOS_SOURCE_HTTP_PREFIX, uri, sizeof(SONOS_SOURCE_HTTP_PREFIX) - 1))
+  if (!strncmp(SONOS_SOURCE_HTTP_SCHEMA, uri, sizeof(SONOS_SOURCE_HTTP_SCHEMA) - 1))
   {
     return SONOS_SOURCE_HTTP;
   }
-  if (!strncmp(SONOS_SOURCE_RADIO_PREFIX, uri, sizeof(SONOS_SOURCE_RADIO_PREFIX) - 1))
+  if (!strncmp(SONOS_SOURCE_RADIO_SCHEMA, uri, sizeof(SONOS_SOURCE_RADIO_SCHEMA) - 1))
   {
     return SONOS_SOURCE_RADIO;
   }
-  if (!strncmp(SONOS_SOURCE_MASTER_PREFIX, uri, sizeof(SONOS_SOURCE_MASTER_PREFIX) - 1))
+  if (!strncmp(SONOS_SOURCE_MASTER_SCHEMA, uri, sizeof(SONOS_SOURCE_MASTER_SCHEMA) - 1))
   {
     return SONOS_SOURCE_MASTER;
   }
-  if (!strncmp(SONOS_SOURCE_LINEIN_PREFIX, uri, sizeof(SONOS_SOURCE_LINEIN_PREFIX) - 1))
+  if (!strncmp(SONOS_SOURCE_LINEIN_SCHEMA, uri, sizeof(SONOS_SOURCE_LINEIN_SCHEMA) - 1))
   {
     return SONOS_SOURCE_LINEIN;
   }
@@ -367,17 +424,17 @@ uint8_t SonosUPnP::getSourceFromURI(const char *uri)
 
 uint32_t SonosUPnP::getTrackDurationInSeconds(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetPositionInfoResponse", "TrackDuration" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackDuration };
   char result[20] = "";
-  upnpAvTransportGet(speakerIP, "GetPositionInfo", path, 4, result, sizeof(result));
+  upnpAvTransportGet(speakerIP, p_GetPositionInfoA, path, 4, result, sizeof(result));
   return getTimeInSeconds(result);
 }
 
 uint32_t SonosUPnP::getTrackPositionInSeconds(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetPositionInfoResponse", "RelTime" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_RelTime };
   char result[20] = "";
-  upnpAvTransportGet(speakerIP, "GetPositionInfo", path, 4, result, sizeof(result));
+  upnpAvTransportGet(speakerIP, p_GetPositionInfoA, path, 4, result, sizeof(result));
   return getTimeInSeconds(result);
 }
 
@@ -386,11 +443,11 @@ uint16_t SonosUPnP::getTrackPositionPerMille(IPAddress speakerIP)
   uint16_t perMille = 0;
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, "GetPositionInfo", "!--", "", "");
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, p_GetPositionInfoA, "", "", "", "", "", "");
     waitForResponse();
     
-    const char *durationPath[] = { "s:Envelope", "s:Body", "u:GetPositionInfoResponse", "TrackDuration" };
-    const char *currentPath[] = { "s:Envelope", "s:Body", "u:GetPositionInfoResponse", "RelTime" };
+    PGM_P durationPath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackDuration };
+    PGM_P currentPath[]  = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_RelTime };
     char result[20];
     xPath.reset();
     xPath.setPath(durationPath, 4);
@@ -415,10 +472,10 @@ uint16_t SonosUPnP::getTrackPositionPerMille(IPAddress speakerIP)
 
 bool SonosUPnP::getMute(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetMuteResponse", "CurrentMute" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetMuteR, p_CurrentMute };
   char result[3] = "0";
   upnpRenderingControlGet(
-    speakerIP, "GetMute", "Channel", SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
+    speakerIP, p_GetMuteA, SONOS_TAG_CHANNEL, SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
   return strcmp(result, "1") == 0;
 }
 
@@ -429,46 +486,46 @@ uint8_t SonosUPnP::getVolume(IPAddress speakerIP)
 
 uint8_t SonosUPnP::getVolume(IPAddress speakerIP, const char *channel)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetVolumeResponse", "CurrentVolume" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetVolumeR, p_CurrentVolume };
   char result[5] = "0";
   upnpRenderingControlGet(
-    speakerIP, "GetVolume", "Channel", channel, path, 4, result, sizeof(result));
+    speakerIP, p_GetVolumeA, SONOS_TAG_CHANNEL, channel, path, 4, result, sizeof(result));
   return constrain(atoi(result), 0, 100);
 }
 
 bool SonosUPnP::getOutputFixed(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetOutputFixedResponse", "CurrentFixed" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetOutputFixedR, p_CurrentFixed };
   char result[3] = "0";
   upnpRenderingControlGet(
-    speakerIP, "GetOutputFixed", "!--", "", path, 4, result, sizeof(result));
+    speakerIP, p_GetOutputFixedA, "", "", path, 4, result, sizeof(result));
   return strcmp(result, "1") == 0;
 }
 
 int8_t SonosUPnP::getBass(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetBassResponse", "CurrentBass" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetBassR, p_CurrentBass };
   char result[5] = "0";
   upnpRenderingControlGet(
-    speakerIP, "GetBass", "Channel", SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
+    speakerIP, p_GetBassA, SONOS_TAG_CHANNEL, SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
   return constrain(atoi(result), -10, 10);
 }
 
 int8_t SonosUPnP::getTreble(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetTrebleResponse", "CurrentTreble" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetTrebleR, p_CurrentTreble };
   char result[5] = "0";
   upnpRenderingControlGet(
-    speakerIP, "GetTreble", "Channel", SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
+    speakerIP, p_GetTrebleA, SONOS_TAG_CHANNEL, SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
   return constrain(atoi(result), -10, 10);
 }
 
 bool SonosUPnP::getLoudness(IPAddress speakerIP)
 {
-  const char *path[] = { "s:Envelope", "s:Body", "u:GetLoudnessResponse", "CurrentLoudness" };
+  PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetLoudnessR, p_CurrentLoudness };
   char result[3] = "0";
   upnpRenderingControlGet(
-    speakerIP, "GetLoudness", "Channel", SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
+    speakerIP, p_GetLoudnessA, SONOS_TAG_CHANNEL, SONOS_CHANNEL_MASTER, path, 4, result, sizeof(result));
   return strcmp(result, "1") == 0;
 }
 
@@ -477,28 +534,34 @@ bool SonosUPnP::getLoudness(IPAddress speakerIP)
 
 void SonosUPnP::seek(IPAddress speakerIP, const char *mode, const char *data)
 {
-  const char *action = "Seek";
-  const char *command = "Target";
-  char unit[25];
-  sprintf(unit, "<Unit>%s</Unit>", mode);
-  upnpSet(speakerIP, UPNP_AV_TRANSPORT, action, command, data, unit);
+  upnpSet(
+    speakerIP, UPNP_AV_TRANSPORT, p_Seek,
+    SONOS_TAG_TARGET, data, "", p_SeekModeTagStart, p_SeekModeTagEnd, mode);
 }
 
-void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, const char *action)
+void SonosUPnP::setAVTransportURI(IPAddress speakerIP, const char *scheme, const char *address, PGM_P metaStart_P, PGM_P metaEnd_P, const char *metaValue)
 {
-  upnpSet(ip, upnpMessageType, action, "!--", "", "");
+  // Info to show in player, in DIDL format, can be added as META data
+  upnpSet(
+    speakerIP, UPNP_AV_TRANSPORT, p_SetAVTransportURI,
+    SONOS_TAG_CURRENT_URI, scheme, address, metaStart_P, metaEnd_P, metaValue);
 }
 
-void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, const char *action, const char *command, const char *value)
+void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P)
 {
-  upnpSet(ip, upnpMessageType, action, command, value, "");
+  upnpSet(ip, upnpMessageType, action_P, "", "", "", "", "", "");
 }
 
-void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, const char *action, const char *command, const char *value, const char *extra)
+void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *value)
+{
+  upnpSet(ip, upnpMessageType, action_P, field, value, "", "", "", "");
+}
+
+void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *valueA, const char *valueB, PGM_P extraStart_P, PGM_P extraEnd_P, const char *extraValue)
 {
   if (ethClient.connect(ip, UPNP_PORT))
   {
-    upnpPost(ip, upnpMessageType, action, command, value, extra);
+    upnpPost(ip, upnpMessageType, action_P, field, valueA, valueB, extraStart_P, extraEnd_P, extraValue);
     waitForResponse();
     while (ethClient.available())
     {
@@ -512,75 +575,133 @@ void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, const char *actio
   ethClient.stop();
 }
 
-void SonosUPnP::upnpPost(IPAddress ip, uint8_t upnpMessageType, const char *action, const char *command, const char *value, const char *extra)
-{  
-  // Buffer length: 100 for command + 200 for media URI
-  char commandBuffer[300];
-  sprintf(commandBuffer, SONOS_COMMAND, command, value, command);
-  const char *upnpUrn = getUpnpService(upnpMessageType);
-  uint16_t extraLen = strlen(extra);
+void SonosUPnP::upnpPost(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *valueA, const char *valueB, PGM_P extraStart_P, PGM_P extraEnd_P, const char *extraValue)
+{
+  // Get UPnP service name
+  PGM_P upnpService = getUpnpService(upnpMessageType);
 
+  // Get HTTP content/body length
   uint16_t contentLength =
     sizeof(SOAP_ENVELOPE_START) - 1 +
     sizeof(SOAP_BODY_START) - 1 +
-    SONOS_ACTION_TAG_LEN +
-    (strlen(action) * 2) +
-    sizeof(UPNP_URN_PREFIX) - 1 +
-    strlen(upnpUrn) +
+    SOAP_ACTION_TAG_LEN +
+    (strlen_P(action_P) * 2) +
+    sizeof(UPNP_URN_SCHEMA) - 1 +
+    strlen_P(upnpService) +
     sizeof(SONOS_INSTANCE_ID_0) - 1 +
-    strlen(commandBuffer) +
-    extraLen +
     sizeof(SOAP_BODY_END) - 1 +
     sizeof(SOAP_ENVELOPE_END) - 1;
 
-  char headerBuffer[100];
-  sprintf(headerBuffer, HTTP_HEADER_POST, getUpnpEndpoint(upnpMessageType));
-  ethClient.println(headerBuffer);
-  sprintf(headerBuffer, HTTP_HEADER_HOST, ip[0], ip[1], ip[2], ip[3], UPNP_PORT);
-  ethClient.println(headerBuffer);
-  ethClient.println(HTTP_HEADER_CONTENT_TYPE);
-  sprintf(headerBuffer, HTTP_HEADER_CONTENT_LENGTH, contentLength);
-  ethClient.println(headerBuffer);
-  sprintf(headerBuffer, HTTP_HEADER_SOAP_ACTION, UPNP_URN_PREFIX, upnpUrn, action);
-  ethClient.println(headerBuffer);
-  ethClient.println(HTTP_HEADER_CONNECTION);
-  ethClient.println("");
-  
-  ethClient.print(SOAP_ENVELOPE_START);
-  ethClient.print(SOAP_BODY_START);
-  ethClient.print(SONOS_ACTION_START_TAG_START);
-  ethClient.print(action);
-  ethClient.print(SONOS_ACTION_START_TAG_NS);
-  ethClient.print(UPNP_URN_PREFIX);
-  ethClient.print(upnpUrn);
-  ethClient.print(SONOS_ACTION_START_TAG_END);
-  ethClient.print(SONOS_INSTANCE_ID_0);
-  ethClient.print(commandBuffer);
-  if (extraLen) ethClient.print(extra);
-  ethClient.print(SONOS_ACTION_END_TAG_START);
-  ethClient.print(action);
-  ethClient.print(SONOS_ACTION_END_TAG_END);
-  ethClient.print(SOAP_BODY_END);
-  ethClient.print(SOAP_ENVELOPE_END);
+  // Get length of field
+  uint8_t fieldLength = strlen(field);
+  if (fieldLength)
+  {
+    contentLength +=
+      SOAP_TAG_LEN +
+      (fieldLength * 2) +
+      strlen(valueA) +
+      strlen(valueB);
+  }
+
+  // Get length of extra field data (e.g. meta data fields)
+  if (extraStart_P)
+  {
+    contentLength +=
+      strlen_P(extraStart_P) +
+      strlen(extraValue) +
+      strlen_P(extraEnd_P);
+  }
+
+  char buffer[50];
+
+  // Write HTTP start
+  ethClient_write("POST ");
+  ethClient_write_P(getUpnpEndpoint(upnpMessageType), buffer, sizeof(buffer));
+  ethClient_write_P(p_HttpVersion, buffer, sizeof(buffer));
+
+  // Write HTTP header
+  sprintf_P(buffer, p_HeaderHost, ip[0], ip[1], ip[2], ip[3], UPNP_PORT); // 29 bytes max
+  ethClient_write(buffer);
+  ethClient_write_P(p_HeaderContentType, buffer, sizeof(buffer));
+  sprintf_P(buffer, p_HeaderContentLength, contentLength); // 23 bytes max
+  ethClient_write(buffer);
+  ethClient_write_P(p_HeaderSoapAction, buffer, sizeof(buffer));
+  ethClient_write_P(p_UpnpUrnSchema, buffer, sizeof(buffer));
+  ethClient_write_P(upnpService, buffer, sizeof(buffer));
+  ethClient_write("#");
+  ethClient_write_P(action_P, buffer, sizeof(buffer));
+  ethClient_write(HEADER_SOAP_ACTION_END);
+  ethClient_write_P(p_HeaderConnection, buffer, sizeof(buffer));
+  ethClient_write("\n");
+
+  // Write HTTP body
+  ethClient_write_P(p_SoapEnvelopeStart, buffer, sizeof(buffer));
+  ethClient_write_P(p_SoapBodyStart, buffer, sizeof(buffer));
+  ethClient_write(SOAP_ACTION_START_TAG_START);
+  ethClient_write_P(action_P, buffer, sizeof(buffer));
+  ethClient_write(SOAP_ACTION_START_TAG_NS);
+  ethClient_write_P(p_UpnpUrnSchema, buffer, sizeof(buffer));
+  ethClient_write_P(upnpService, buffer, sizeof(buffer));
+  ethClient_write(SOAP_ACTION_START_TAG_END);
+  ethClient_write_P(p_InstenceId0, buffer, sizeof(buffer));
+  if (fieldLength)
+  {
+    sprintf(buffer, SOAP_TAG_START, field); // 18 bytes
+    ethClient_write(buffer);
+    ethClient_write(valueA);
+    ethClient_write(valueB);
+    sprintf(buffer, SOAP_TAG_END, field); // 19 bytes
+    ethClient_write(buffer);
+  }
+  if (extraStart_P)
+  {
+    ethClient_write_P(extraStart_P, buffer, sizeof(buffer)); // 390 bytes
+    ethClient_write(extraValue);
+    ethClient_write_P(extraEnd_P, buffer, sizeof(buffer)); // 271 bytes
+  }
+  ethClient_write(SOAP_ACTION_END_TAG_START);
+  ethClient_write_P(action_P, buffer, sizeof(buffer)); // 35 bytes
+  ethClient_write(SOAP_ACTION_END_TAG_END);
+  ethClient_write_P(p_SoapBodyEnd, buffer, sizeof(buffer)); // 10 bytes
+  ethClient_write_P(p_SoapEnvelopeEnd, buffer, sizeof(buffer)); // 14 bytes
 }
 
-const char *SonosUPnP::getUpnpService(uint8_t upnpMessageType)
+PGM_P SonosUPnP::getUpnpService(uint8_t upnpMessageType)
 {
   switch (upnpMessageType)
   {
-    case UPNP_AV_TRANSPORT: return UPNP_AV_TRANSPORT_SERVICE;
-    case UPNP_RENDERING_CONTROL: return UPNP_RENDERING_CONTROL_SERVICE;
-    case UPNP_DEVICE_PROPERTIES: return UPNP_DEVICE_PROPERTIES_SERVICE;
+    case UPNP_AV_TRANSPORT: return p_UpnpAvTransportService;
+    case UPNP_RENDERING_CONTROL: return p_UpnpRenderingControlService;
+    case UPNP_DEVICE_PROPERTIES: return p_UpnpDevicePropertiesService;
   }
 }
 
-const char *SonosUPnP::getUpnpEndpoint(uint8_t upnpMessageType)
+PGM_P SonosUPnP::getUpnpEndpoint(uint8_t upnpMessageType)
 {
   switch (upnpMessageType)
   {
-    case UPNP_AV_TRANSPORT: return UPNP_AV_TRANSPORT_ENDPOINT;
-    case UPNP_RENDERING_CONTROL: return UPNP_RENDERING_CONTROL_ENDPOINT;
-    case UPNP_DEVICE_PROPERTIES: return UPNP_DEVICE_PROPERTIES_ENDPOINT;
+    case UPNP_AV_TRANSPORT: return p_UpnpAvTransportEndpoint;
+    case UPNP_RENDERING_CONTROL: return p_UpnpRenderingControlEndpoint;
+    case UPNP_DEVICE_PROPERTIES: return p_UpnpDevicePropertiesEndpoint;
+  }
+}
+
+void SonosUPnP::ethClient_write(const char *data)
+{
+  //Serial.print(data);
+  ethClient.print(data);
+}
+
+void SonosUPnP::ethClient_write_P(PGM_P data_P, char *buffer, size_t bufferSize)
+{
+  uint16_t dataLen = strlen_P(data_P);
+  uint16_t dataPos = 0;
+  while (dataLen > dataPos)
+  {
+    strlcpy_P(buffer, data_P + dataPos, bufferSize);
+    //Serial.print(buffer);
+    ethClient.print(buffer);
+    dataPos += bufferSize - 1;
   }
 }
 
@@ -599,11 +720,11 @@ void SonosUPnP::waitForResponse()
 
 #ifndef SONOS_WRITE_ONLY_MODE
 
-void SonosUPnP::upnpAvTransportGet(IPAddress speakerIP, const char *action, const char *path[], size_t pathSize, char *resultBuffer, size_t resultBufferSize)
+void SonosUPnP::upnpAvTransportGet(IPAddress speakerIP, PGM_P action_P, PGM_P *path, size_t pathSize, char *resultBuffer, size_t resultBufferSize)
 {
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action, "!--", "", "");
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, "", "", "", "", "", "");
     waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);
@@ -618,11 +739,11 @@ void SonosUPnP::upnpAvTransportGet(IPAddress speakerIP, const char *action, cons
   }
 }
 
-void SonosUPnP::upnpRenderingControlGet(IPAddress speakerIP, const char *action, const char *command, const char *value, const char *path[], size_t pathSize, char *resultBuffer, size_t resultBufferSize)
+void SonosUPnP::upnpRenderingControlGet(IPAddress speakerIP, PGM_P action_P, const char *field, const char *value, PGM_P *path, size_t pathSize, char *resultBuffer, size_t resultBufferSize)
 {
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action, command, value, "");
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, field, value, "", "", "", "");
     waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);

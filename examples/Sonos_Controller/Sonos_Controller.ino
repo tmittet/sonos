@@ -20,7 +20,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 #include <SonosUPnP.h>
-#include <MicroXPath.h>
+#include <MicroXPath_P.h>
 
 #define ETHERNET_MAC (byte[]) {0x54, 0x48, 0x4F, 0x4D, 0x41, 0x53}
 #define ETHERNET_STATIC_IP  (byte[]) {192, 168, 0, 123}
@@ -34,9 +34,9 @@
 #define SONOS_STATUS_POLL_DELAY_MS 10000
 
 #define SERIAL_DATA_THRESHOLD_MS 500
-#define SERIAL_ERROR_TIMEOUT "Error: Serial"
-#define ETHERNET_ERROR_DHCP "Error: DHCP"
-#define ETHERNET_ERROR_CONNECT "Error: Connect"
+#define SERIAL_ERROR_TIMEOUT "E: Serial"
+#define ETHERNET_ERROR_DHCP "E: DHCP"
+#define ETHERNET_ERROR_CONNECT "E: Connect"
 
 EthernetClient g_ethClient;
 SonosUPnP g_sonos = SonosUPnP(g_ethClient, ethConnectError);
