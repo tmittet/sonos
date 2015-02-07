@@ -443,7 +443,7 @@ uint16_t SonosUPnP::getTrackPositionPerMille(IPAddress speakerIP)
   uint16_t perMille = 0;
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, p_GetPositionInfoA, "", "", "", "", "", "");
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, p_GetPositionInfoA, "", "", "", 0, 0, "");
     waitForResponse();
     
     PGM_P durationPath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackDuration };
@@ -549,12 +549,12 @@ void SonosUPnP::setAVTransportURI(IPAddress speakerIP, const char *scheme, const
 
 void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P)
 {
-  upnpSet(ip, upnpMessageType, action_P, "", "", "", "", "", "");
+  upnpSet(ip, upnpMessageType, action_P, "", "", "", 0, 0, "");
 }
 
 void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *value)
 {
-  upnpSet(ip, upnpMessageType, action_P, field, value, "", "", "", "");
+  upnpSet(ip, upnpMessageType, action_P, field, value, "", 0, 0, "");
 }
 
 void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *valueA, const char *valueB, PGM_P extraStart_P, PGM_P extraEnd_P, const char *extraValue)
@@ -724,7 +724,7 @@ void SonosUPnP::upnpAvTransportGet(IPAddress speakerIP, PGM_P action_P, PGM_P *p
 {
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, "", "", "", "", "", "");
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, "", "", "", 0, 0, "");
     waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);
@@ -743,7 +743,7 @@ void SonosUPnP::upnpRenderingControlGet(IPAddress speakerIP, PGM_P action_P, con
 {
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, field, value, "", "", "", "");
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, field, value, "", 0, 0, "");
     waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);
