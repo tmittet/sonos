@@ -163,6 +163,7 @@
 #define SONOS_SOURCE_FILE_SCHEMA "x-file-cifs:"
 #define SONOS_SOURCE_HTTP_SCHEMA "x-sonos-http:"
 #define SONOS_SOURCE_RADIO_SCHEMA "x-rincon-mp3radio:"
+#define SONOS_SOURCE_RADIO_AAC_SCHEMA "aac:"
 #define SONOS_SOURCE_LINEIN_SCHEMA "x-rincon-stream:"
 #define SONOS_SOURCE_MASTER_SCHEMA "x-rincon:"
 #define SONOS_SOURCE_QUEUE_SCHEMA "x-rincon-queue:"

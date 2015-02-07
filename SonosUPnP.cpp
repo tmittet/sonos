@@ -411,6 +411,10 @@ uint8_t SonosUPnP::getSourceFromURI(const char *uri)
   {
     return SONOS_SOURCE_RADIO;
   }
+  if (!strncmp(SONOS_SOURCE_RADIO_AAC_SCHEMA, uri, sizeof(SONOS_SOURCE_RADIO_AAC_SCHEMA) - 1))
+  {
+    return SONOS_SOURCE_RADIO;
+  }
   if (!strncmp(SONOS_SOURCE_MASTER_SCHEMA, uri, sizeof(SONOS_SOURCE_MASTER_SCHEMA) - 1))
   {
     return SONOS_SOURCE_MASTER;
