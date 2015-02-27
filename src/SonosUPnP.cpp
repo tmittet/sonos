@@ -1,5 +1,5 @@
 /************************************************************************/
-/* Sonos UPnP, an UPnP based read/write remote control library, v1.0.   */
+/* Sonos UPnP, an UPnP based read/write remote control library, v1.1.   */
 /*                                                                      */
 /* This library is free software: you can redistribute it and/or modify */
 /* it under the terms of the GNU General Public License as published by */
