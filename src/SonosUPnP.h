@@ -277,7 +277,8 @@ class SonosUPnP
     const char *getUpnpEndpoint(uint8_t upnpMessageType);
     void ethClient_write(const char *data);
     void ethClient_write_P(PGM_P data_P, char *buffer, size_t bufferSize);
-    void waitForResponse();
+    void ethClient_waitForResponse();
+    void ethClient_flush();
 
     #ifndef SONOS_WRITE_ONLY_MODE
 

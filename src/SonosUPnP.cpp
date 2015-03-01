@@ -448,8 +448,7 @@ uint16_t SonosUPnP::getTrackPositionPerMille(IPAddress speakerIP)
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
     upnpPost(speakerIP, UPNP_AV_TRANSPORT, p_GetPositionInfoA, "", "", "", 0, 0, "");
-    waitForResponse();
-    
+    ethClient_waitForResponse();
     PGM_P durationPath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackDuration };
     PGM_P currentPath[]  = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_RelTime };
     char result[20];
@@ -460,11 +459,11 @@ uint16_t SonosUPnP::getTrackPositionPerMille(IPAddress speakerIP)
     xPath.setPath(currentPath, 4);
     while (ethClient.available() && !xPath.getValue(ethClient.read(), result, sizeof(result)));
     uint32_t currentSeconds = getTimeInSeconds(result);
-    while (ethClient.available()) ethClient.flush();
     if (durationSeconds && currentSeconds)
     {
       perMille = round(currentSeconds * 1000.0 / durationSeconds);
-    }    
+    }
+    ethClient_flush();
   }
   else
   {
@@ -566,11 +565,8 @@ void SonosUPnP::upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, c
   if (ethClient.connect(ip, UPNP_PORT))
   {
     upnpPost(ip, upnpMessageType, action_P, field, valueA, valueB, extraStart_P, extraEnd_P, extraValue);
-    waitForResponse();
-    while (ethClient.available())
-    {
-      ethClient.flush();
-    }
+    ethClient_waitForResponse();
+    ethClient_flush();
   }
   else
   {
@@ -709,7 +705,7 @@ void SonosUPnP::ethClient_write_P(PGM_P data_P, char *buffer, size_t bufferSize)
   }
 }
 
-void SonosUPnP::waitForResponse()
+void SonosUPnP::ethClient_waitForResponse()
 {
   uint32_t start = millis();
   while (!ethClient.available())
@@ -722,6 +718,15 @@ void SonosUPnP::waitForResponse()
   }
 }
 
+void SonosUPnP::ethClient_flush()
+{
+  while (ethClient.available())
+  {
+    ethClient.flush();
+    ethClient.read();
+  }
+}
+
 #ifndef SONOS_WRITE_ONLY_MODE
 
 void SonosUPnP::upnpAvTransportGet(IPAddress speakerIP, PGM_P action_P, PGM_P *path, size_t pathSize, char *resultBuffer, size_t resultBufferSize)
@@ -729,18 +734,17 @@ void SonosUPnP::upnpAvTransportGet(IPAddress speakerIP, PGM_P action_P, PGM_P *p
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
     upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, "", "", "", 0, 0, "");
-    waitForResponse();
+    ethClient_waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);
     while (ethClient.available() && !xPath.getValue(ethClient.read(), resultBuffer, resultBufferSize));
-    while (ethClient.available()) ethClient.flush();
-    ethClient.stop();
+    ethClient_flush();
   }
   else
   {
     if (ethernetErrCallback) ethernetErrCallback();
-    ethClient.stop();
   }
+  ethClient.stop();
 }
 
 void SonosUPnP::upnpRenderingControlGet(IPAddress speakerIP, PGM_P action_P, const char *field, const char *value, PGM_P *path, size_t pathSize, char *resultBuffer, size_t resultBufferSize)
@@ -748,18 +752,17 @@ void SonosUPnP::upnpRenderingControlGet(IPAddress speakerIP, PGM_P action_P, con
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
     upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, field, value, "", 0, 0, "");
-    waitForResponse();
+    ethClient_waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);
     while (ethClient.available() && !xPath.getValue(ethClient.read(), resultBuffer, resultBufferSize));
-    while (ethClient.available()) ethClient.flush();
-    ethClient.stop();
+    ethClient_flush();
   }
   else
   {
     if (ethernetErrCallback) ethernetErrCallback();
-    ethClient.stop();
   }
+  ethClient.stop();
 }
 
 uint32_t SonosUPnP::getTimeInSeconds(const char *time)
