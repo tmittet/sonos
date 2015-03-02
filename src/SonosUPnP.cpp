@@ -720,11 +720,7 @@ void SonosUPnP::ethClient_waitForResponse()
 
 void SonosUPnP::ethClient_flush()
 {
-  while (ethClient.available())
-  {
-    ethClient.flush();
-    ethClient.read();
-  }
+  while (ethClient.available()) ethClient.read();
 }
 
 #ifndef SONOS_WRITE_ONLY_MODE
