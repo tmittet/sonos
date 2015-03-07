@@ -7,6 +7,7 @@
 #######################################
 
 SonosUPnP	KEYWORD1
+TrackInfo	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -35,6 +36,7 @@ setTreble	KEYWORD2
 setLoudness	KEYWORD2
 setStatusLight	KEYWORD2
 addPlaylistToQueue	KEYWORD2
+addTrackToQueue	KEYWORD2
 removeAllTracksFromQueue	KEYWORD2  
 setRepeat	KEYWORD2
 setShuffle	KEYWORD2
@@ -47,6 +49,7 @@ getState	KEYWORD2
 getPlayMode	KEYWORD2
 getRepeat	KEYWORD2
 getShuffle	KEYWORD2
+getTrackInfo	KEYWORD2
 getTrackNumber	KEYWORD2
 getTrackURI	KEYWORD2
 getSource	KEYWORD2
@@ -66,7 +69,10 @@ getLoudness	KEYWORD2
 # Instances (KEYWORD2)
 #######################################
 
-
+number	KEYWORD2
+duration	KEYWORD2
+position	KEYWORD2
+uri	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)

@@ -19,7 +19,6 @@
 
 #include "SonosUPnP.h"
 
-// Store string arrays in program memory (ROM instead of RAM)
 const char p_HttpVersion[] PROGMEM = HTTP_VERSION;
 const char p_HeaderHost[] PROGMEM = HEADER_HOST;
 const char p_HeaderContentType[] PROGMEM = HEADER_CONTENT_TYPE;
@@ -31,6 +30,8 @@ const char p_SoapEnvelopeStart[] PROGMEM = SOAP_ENVELOPE_START;
 const char p_SoapEnvelopeEnd[] PROGMEM = SOAP_ENVELOPE_END;
 const char p_SoapBodyStart[] PROGMEM = SOAP_BODY_START;
 const char p_SoapBodyEnd[] PROGMEM = SOAP_BODY_END;
+const char p_SoapEnvelope[] PROGMEM = SOAP_TAG_ENVELOPE;
+const char p_SoapBody[] PROGMEM = SOAP_TAG_BODY;
 
 const char p_UpnpUrnSchema[] PROGMEM = UPNP_URN_SCHEMA;
 const char p_UpnpAvTransportService[] PROGMEM = UPNP_AV_TRANSPORT_SERVICE;
@@ -40,73 +41,73 @@ const char p_UpnpRenderingControlEndpoint[] PROGMEM = UPNP_RENDERING_CONTROL_END
 const char p_UpnpDevicePropertiesService[] PROGMEM = UPNP_DEVICE_PROPERTIES_SERVICE;
 const char p_UpnpDevicePropertiesEndpoint[] PROGMEM = UPNP_DEVICE_PROPERTIES_ENDPOINT;
 
-const char p_InstenceId0[] PROGMEM = SONOS_INSTANCE_ID_0;
-const char p_SavedQueues[] PROGMEM = SONOS_SAVED_QUEUES;
-const char p_TimeFormatTemplate[] PROGMEM = SONOS_TIME_FORMAT_TEMPLATE;
+const char p_Play[] PROGMEM = SONOS_TAG_PLAY;
 const char p_SourceRinconTemplate[] PROGMEM = SONOS_SOURCE_RINCON_TEMPLATE;
-
+const char p_Stop[] PROGMEM = SONOS_TAG_STOP;
+const char p_Pause[] PROGMEM = SONOS_TAG_PAUSE;
+const char p_Previous[] PROGMEM = SONOS_TAG_PREVIOUS;
+const char p_Next[] PROGMEM = SONOS_TAG_NEXT;
+const char p_InstenceId0Tag[] PROGMEM = SONOS_INSTANCE_ID_0_TAG;
+const char p_Seek[] PROGMEM = SONOS_TAG_SEEK;
+const char p_SeekModeTagStart[] PROGMEM = SONOS_SEEK_MODE_TAG_START;
+const char p_SeekModeTagEnd[] PROGMEM = SONOS_SEEK_MODE_TAG_END;
+const char p_TimeFormatTemplate[] PROGMEM = SONOS_TIME_FORMAT_TEMPLATE;
+const char p_SetAVTransportURI[] PROGMEM = SONOS_TAG_SET_AV_TRANSPORT_URI;
 const char p_UriMetaLightStart[] PROGMEM = SONOS_URI_META_LIGHT_START;
 const char p_UriMetaLightEnd[] PROGMEM = SONOS_URI_META_LIGHT_END;
 const char p_RadioMetaFullStart[] PROGMEM = SONOS_RADIO_META_FULL_START;
 const char p_RadioMetaFullEnd[] PROGMEM = SONOS_RADIO_META_FULL_END;
+const char p_BecomeCoordinatorOfStandaloneGroup[] PROGMEM = SONOS_TAG_BECOME_COORDINATOR_OF_STANDALONE_GROUP;
+const char p_SetLEDState[] PROGMEM = SONOS_TAG_SET_LED_STATE;
+
+const char p_AddURIToQueue[] PROGMEM = SONOS_TAG_ADD_URI_TO_QUEUE;
+const char p_SavedQueues[] PROGMEM = SONOS_SAVED_QUEUES;
+const char p_RemoveAllTracksFromQueue[] PROGMEM = SONOS_TAG_REMOVE_ALL_TRACKS_FROM_QUEUE;
 const char p_PlaylistMetaLightStart[] PROGMEM = SONOS_PLAYLIST_META_LIGHT_START;
 const char p_PlaylistMetaLightEnd[] PROGMEM = SONOS_PLAYLIST_META_LIGHT_END;
 
-const char p_GetTransportInfoA[] PROGMEM = SONOS_TAG_GET_TRANSPORT_INFO;
-const char p_GetTransportSettingsA[] PROGMEM = SONOS_TAG_GET_TRANSPORT_SETTINGS;
 const char p_GetPositionInfoA[] PROGMEM = SONOS_TAG_GET_POSITION_INFO;
+const char p_GetPositionInfoR[] PROGMEM = SONOS_TAG_GET_POSITION_INFO_RESPONSE;
+const char p_Track[] PROGMEM = SONOS_TAG_TRACK;
+const char p_TrackDuration[] PROGMEM = SONOS_TAG_TRACK_DURATION;
+const char p_TrackURI[] PROGMEM = SONOS_TAG_TRACK_URI;
+const char p_RelTime[] PROGMEM = SONOS_TAG_REL_TIME;
+
 const char p_GetMuteA[] PROGMEM = SONOS_TAG_GET_MUTE;
+const char p_GetMuteR[] PROGMEM = SONOS_TAG_GET_MUTE_RESPONSE;
+const char p_CurrentMute[] PROGMEM = SONOS_TAG_CURRENT_MUTE;
 const char p_GetVolumeA[] PROGMEM = SONOS_TAG_GET_VOLUME;
+const char p_GetVolumeR[] PROGMEM = SONOS_TAG_GET_VOLUME_RESPONSE;
+const char p_CurrentVolume[] PROGMEM = SONOS_TAG_CURRENT_VOLUME;
 const char p_GetOutputFixedA[] PROGMEM = SONOS_TAG_GET_OUTPUT_FIXED;
+const char p_GetOutputFixedR[] PROGMEM = SONOS_TAG_GET_FIXED_RESPONSE;
+const char p_CurrentFixed[] PROGMEM = SONOS_TAG_CURRENT_FIXED;
 const char p_GetBassA[] PROGMEM = SONOS_TAG_GET_BASS;
+const char p_GetBassR[] PROGMEM = SONOS_TAG_GET_BASS_RESPONSE;
+const char p_CurrentBass[] PROGMEM = SONOS_TAG_CURRENT_BASS;
 const char p_GetTrebleA[] PROGMEM = SONOS_TAG_GET_TREBLE;
+const char p_GetTrebleR[] PROGMEM = SONOS_TAG_GET_TREBLE_RESPONSE;
+const char p_CurrentTreble[] PROGMEM = SONOS_TAG_CURRENT_TREBLE;
 const char p_GetLoudnessA[] PROGMEM = SONOS_TAG_GET_LOUDNESS;
-const char p_SetAVTransportURI[] PROGMEM = SONOS_TAG_SET_AV_TRANSPORT_URI;
-const char p_SetPlayMode[] PROGMEM = SONOS_TAG_SET_PLAY_MODE;
+const char p_GetLoudnessR[] PROGMEM = SONOS_TAG_GET_LOUDNESS_RESPONSE;
+const char p_CurrentLoudness[] PROGMEM = SONOS_TAG_CURRENT_LOUDNESS;
+
 const char p_SetMute[] PROGMEM = SONOS_TAG_SET_MUTE;
 const char p_SetVolume[] PROGMEM = SONOS_TAG_SET_VOLUME;
 const char p_SetBass[] PROGMEM = SONOS_TAG_SET_BASS;
 const char p_SetTreble[] PROGMEM = SONOS_TAG_SET_TREBLE;
 const char p_SetLoudness[] PROGMEM = SONOS_TAG_SET_LOUDNESS;
-const char p_SetLEDState[] PROGMEM = SONOS_TAG_SET_LED_STATE;
-const char p_Play[] PROGMEM = SONOS_TAG_PLAY;
-const char p_Stop[] PROGMEM = SONOS_TAG_STOP;
-const char p_Pause[] PROGMEM = SONOS_TAG_PAUSE;
-const char p_Next[] PROGMEM = SONOS_TAG_NEXT;
-const char p_Previous[] PROGMEM = SONOS_TAG_PREVIOUS;
-const char p_Seek[] PROGMEM = SONOS_TAG_SEEK;
-const char p_AddURIToQueue[] PROGMEM = SONOS_TAG_ADD_URI_TO_QUEUE;
-const char p_RemoveAllTracksFromQueue[] PROGMEM = SONOS_TAG_REMOVE_ALL_TRACKS_FROM_QUEUE;
-const char p_BecomeCoordinatorOfStandaloneGroup[] PROGMEM = SONOS_TAG_BECOME_COORDINATOR_OF_STANDALONE_GROUP;
-
 const char p_ChannelTagStart[] PROGMEM = SONOS_CHANNEL_TAG_START;
 const char p_ChannelTagEnd[] PROGMEM = SONOS_CHANNEL_TAG_END;
-const char p_SeekModeTagStart[] PROGMEM = SONOS_SEEK_MODE_TAG_START;
-const char p_SeekModeTagEnd[] PROGMEM = SONOS_SEEK_MODE_TAG_END;
 
-const char p_SoapEnvelope[] PROGMEM = SONOS_TAG_ENVELOPE;
-const char p_SoapBody[] PROGMEM = SONOS_TAG_BODY;
-const char p_GetTransportInfoR[] PROGMEM = SONOS_TAG_GET_TRANSPORT_INFO_RESPONSE;
+const char p_GetTransportSettingsA[] PROGMEM = SONOS_TAG_GET_TRANSPORT_SETTINGS;
 const char p_GetTransportSettingsR[] PROGMEM = SONOS_TAG_GET_TRANSPORT_SETTINGS_RESPONSE;
-const char p_GetPositionInfoR[] PROGMEM = SONOS_TAG_GET_POSITION_INFO_RESPONSE;
-const char p_GetMuteR[] PROGMEM = SONOS_TAG_GET_MUTE_RESPONSE;
-const char p_GetVolumeR[] PROGMEM = SONOS_TAG_GET_VOLUME_RESPONSE;
-const char p_GetOutputFixedR[] PROGMEM = SONOS_TAG_GET_FIXED_RESPONSE;
-const char p_GetBassR[] PROGMEM = SONOS_TAG_GET_BASS_RESPONSE;
-const char p_GetTrebleR[] PROGMEM = SONOS_TAG_GET_TREBLE_RESPONSE;
-const char p_GetLoudnessR[] PROGMEM = SONOS_TAG_GET_LOUDNESS_RESPONSE;
-const char p_CurrentTransportState[] PROGMEM = SONOS_TAG_CURRENT_TRANSPORT_STATE;
 const char p_PlayMode[] PROGMEM = SONOS_TAG_PLAY_MODE;
-const char p_Track[] PROGMEM = SONOS_TAG_TRACK;
-const char p_TrackURI[] PROGMEM = SONOS_TAG_TRACK_URI;
-const char p_TrackDuration[] PROGMEM = SONOS_TAG_TRACK_DURATION;
-const char p_RelTime[] PROGMEM = SONOS_TAG_REL_TIME;
-const char p_CurrentMute[] PROGMEM = SONOS_TAG_CURRENT_MUTE;
-const char p_CurrentVolume[] PROGMEM = SONOS_TAG_CURRENT_VOLUME;
-const char p_CurrentFixed[] PROGMEM = SONOS_TAG_CURRENT_FIXED;
-const char p_CurrentBass[] PROGMEM = SONOS_TAG_CURRENT_BASS;
-const char p_CurrentTreble[] PROGMEM = SONOS_TAG_CURRENT_TREBLE;
-const char p_CurrentLoudness[] PROGMEM = SONOS_TAG_CURRENT_LOUDNESS;
+const char p_SetPlayMode[] PROGMEM = SONOS_TAG_SET_PLAY_MODE;
+
+const char p_GetTransportInfoA[] PROGMEM = SONOS_TAG_GET_TRANSPORT_INFO;
+const char p_GetTransportInfoR[] PROGMEM = SONOS_TAG_GET_TRANSPORT_INFO_RESPONSE;
+const char p_CurrentTransportState[] PROGMEM = SONOS_TAG_CURRENT_TRANSPORT_STATE;
 
 SonosUPnP::SonosUPnP(EthernetClient client, void (*ethernetErrCallback)(void))
 {
@@ -163,21 +164,21 @@ void SonosUPnP::play(IPAddress speakerIP)
   upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_Play, SONOS_TAG_SPEED, "1");
 }
 
-void SonosUPnP::playFile(IPAddress speakerIP, const char *address)
+void SonosUPnP::playFile(IPAddress speakerIP, const char *path)
 {
-  setAVTransportURI(speakerIP, SONOS_SOURCE_FILE_SCHEMA, address);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_FILE_SCHEME, path);
   play(speakerIP);
 }
 
 void SonosUPnP::playHttp(IPAddress speakerIP, const char *address)
 {
-  setAVTransportURI(speakerIP, SONOS_SOURCE_HTTP_SCHEMA, address);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_HTTP_SCHEME, address);
   play(speakerIP);
 }
 
 void SonosUPnP::playRadio(IPAddress speakerIP, const char *address, const char *title)
 {
-  setAVTransportURI(speakerIP, SONOS_SOURCE_RADIO_SCHEMA, address, p_RadioMetaFullStart, p_RadioMetaFullEnd, title);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_RADIO_SCHEME, address, p_RadioMetaFullStart, p_RadioMetaFullEnd, title);
   play(speakerIP);
 }
 
@@ -185,7 +186,7 @@ void SonosUPnP::playLineIn(IPAddress speakerIP, const char *speakerID)
 {
   char address[30];
   sprintf_P(address, p_SourceRinconTemplate, speakerID, UPNP_PORT, "");
-  setAVTransportURI(speakerIP, SONOS_SOURCE_LINEIN_SCHEMA, address);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_LINEIN_SCHEME, address);
   play(speakerIP);
 }
 
@@ -193,7 +194,7 @@ void SonosUPnP::playQueue(IPAddress speakerIP, const char *speakerID)
 {
   char address[30];
   sprintf_P(address, p_SourceRinconTemplate, speakerID, UPNP_PORT, "#0");
-  setAVTransportURI(speakerIP, SONOS_SOURCE_QUEUE_SCHEMA, address);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_QUEUE_SCHEME, address);
   play(speakerIP);
 }
 
@@ -201,7 +202,7 @@ void SonosUPnP::playConnectToMaster(IPAddress speakerIP, const char *masterSpeak
 {
   char address[30];
   sprintf_P(address, p_SourceRinconTemplate, masterSpeakerID, UPNP_PORT, "");
-  setAVTransportURI(speakerIP, SONOS_SOURCE_MASTER_SCHEMA, address);
+  setAVTransportURI(speakerIP, SONOS_SOURCE_MASTER_SCHEME, address);
 }
 
 void SonosUPnP::disconnectFromMaster(IPAddress speakerIP)
@@ -437,34 +438,34 @@ void SonosUPnP::getTrackURI(IPAddress speakerIP, char *resultBuffer, size_t resu
 
 uint8_t SonosUPnP::getSource(IPAddress speakerIP)
 {
-  char result[25] = "";
-  getTrackURI(speakerIP, result, sizeof(result));
-  return getSourceFromURI(result);
+  char uri[25] = "";
+  getTrackURI(speakerIP, uri, sizeof(uri));
+  return getSourceFromURI(uri);
 }
 
 uint8_t SonosUPnP::getSourceFromURI(const char *uri)
 {
-  if (!strncmp(SONOS_SOURCE_FILE_SCHEMA, uri, sizeof(SONOS_SOURCE_FILE_SCHEMA) - 1))
+  if (!strncmp(SONOS_SOURCE_FILE_SCHEME, uri, sizeof(SONOS_SOURCE_FILE_SCHEME) - 1))
   {
     return SONOS_SOURCE_FILE;
   }
-  if (!strncmp(SONOS_SOURCE_HTTP_SCHEMA, uri, sizeof(SONOS_SOURCE_HTTP_SCHEMA) - 1))
+  if (!strncmp(SONOS_SOURCE_HTTP_SCHEME, uri, sizeof(SONOS_SOURCE_HTTP_SCHEME) - 1))
   {
     return SONOS_SOURCE_HTTP;
   }
-  if (!strncmp(SONOS_SOURCE_RADIO_SCHEMA, uri, sizeof(SONOS_SOURCE_RADIO_SCHEMA) - 1))
+  if (!strncmp(SONOS_SOURCE_RADIO_SCHEME, uri, sizeof(SONOS_SOURCE_RADIO_SCHEME) - 1))
   {
     return SONOS_SOURCE_RADIO;
   }
-  if (!strncmp(SONOS_SOURCE_RADIO_AAC_SCHEMA, uri, sizeof(SONOS_SOURCE_RADIO_AAC_SCHEMA) - 1))
+  if (!strncmp(SONOS_SOURCE_RADIO_AAC_SCHEME, uri, sizeof(SONOS_SOURCE_RADIO_AAC_SCHEME) - 1))
   {
     return SONOS_SOURCE_RADIO;
   }
-  if (!strncmp(SONOS_SOURCE_MASTER_SCHEMA, uri, sizeof(SONOS_SOURCE_MASTER_SCHEMA) - 1))
+  if (!strncmp(SONOS_SOURCE_MASTER_SCHEME, uri, sizeof(SONOS_SOURCE_MASTER_SCHEME) - 1))
   {
     return SONOS_SOURCE_MASTER;
   }
-  if (!strncmp(SONOS_SOURCE_LINEIN_SCHEMA, uri, sizeof(SONOS_SOURCE_LINEIN_SCHEMA) - 1))
+  if (!strncmp(SONOS_SOURCE_LINEIN_SCHEME, uri, sizeof(SONOS_SOURCE_LINEIN_SCHEME) - 1))
   {
     return SONOS_SOURCE_LINEIN;
   }
@@ -633,7 +634,7 @@ void SonosUPnP::upnpPost(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, 
     (strlen_P(action_P) * 2) +
     sizeof(UPNP_URN_SCHEMA) - 1 +
     strlen_P(upnpService) +
-    sizeof(SONOS_INSTANCE_ID_0) - 1 +
+    sizeof(SONOS_INSTANCE_ID_0_TAG) - 1 +
     sizeof(SOAP_BODY_END) - 1 +
     sizeof(SOAP_ENVELOPE_END) - 1;
 
@@ -688,7 +689,7 @@ void SonosUPnP::upnpPost(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, 
   ethClient_write_P(p_UpnpUrnSchema, buffer, sizeof(buffer));
   ethClient_write_P(upnpService, buffer, sizeof(buffer));
   ethClient_write(SOAP_ACTION_START_TAG_END);
-  ethClient_write_P(p_InstenceId0, buffer, sizeof(buffer));
+  ethClient_write_P(p_InstenceId0Tag, buffer, sizeof(buffer));
   if (fieldLength)
   {
     sprintf(buffer, SOAP_TAG_START, field); // 18 bytes
@@ -872,4 +873,3 @@ bool SonosUPnP::convertShuffle(uint8_t playMode)
 }
 
 #endif
-
