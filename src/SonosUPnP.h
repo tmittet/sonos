@@ -238,6 +238,7 @@ class SonosUPnP
     void setLoudness(IPAddress speakerIP, bool state);
     void setStatusLight(IPAddress speakerIP, bool state);
     void addPlaylistToQueue(IPAddress speakerIP, uint16_t playlistIndex);
+    void addTrackToQueue(IPAddress speakerIP, const char *scheme, const char *address);
     void removeAllTracksFromQueue(IPAddress speakerIP);
     
     #ifndef SONOS_WRITE_ONLY_MODE

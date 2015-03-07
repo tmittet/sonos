@@ -283,11 +283,16 @@ void SonosUPnP::setStatusLight(IPAddress speakerIP, bool state)
 
 void SonosUPnP::addPlaylistToQueue(IPAddress speakerIP, uint16_t playlistIndex)
 {
-  char uri[45];
-  sprintf_P(uri, p_SavedQueues, playlistIndex);
+  char path[45];
+  sprintf_P(path, p_SavedQueues, playlistIndex);
+  addTrackToQueue(speakerIP, "", path);
+}
+
+void SonosUPnP::addTrackToQueue(IPAddress speakerIP, const char *scheme, const char *address)
+{
   upnpSet(
     speakerIP, UPNP_AV_TRANSPORT, p_AddURIToQueue,
-    SONOS_TAG_ENQUEUED_URI, uri, "", p_PlaylistMetaLightStart, p_PlaylistMetaLightEnd, "");
+    SONOS_TAG_ENQUEUED_URI, scheme, address, p_PlaylistMetaLightStart, p_PlaylistMetaLightEnd, "");
 }
 
 void SonosUPnP::removeAllTracksFromQueue(IPAddress speakerIP)
