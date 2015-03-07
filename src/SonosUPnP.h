@@ -200,6 +200,14 @@
 #define SONOS_TAG_CURRENT_TREBLE "CurrentTreble"
 #define SONOS_TAG_CURRENT_LOUDNESS "CurrentLoudness"
 
+struct TrackInfo
+{
+  uint16_t number;
+  uint32_t duration;
+  uint32_t position;
+  char *uri;
+};
+
 class SonosUPnP
 {
 
@@ -245,6 +253,7 @@ class SonosUPnP
     uint8_t getPlayMode(IPAddress speakerIP);
     bool getRepeat(IPAddress speakerIP);
     bool getShuffle(IPAddress speakerIP);
+    TrackInfo getTrackInfo(IPAddress speakerIP, char *uriBuffer, size_t uriBufferSize);
     uint16_t getTrackNumber(IPAddress speakerIP);
     void getTrackURI(IPAddress speakerIP, char *resultBuffer, size_t resultBufferSize);
     uint8_t getSource(IPAddress speakerIP);

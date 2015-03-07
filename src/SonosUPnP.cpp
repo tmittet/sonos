@@ -376,6 +376,46 @@ bool SonosUPnP::getShuffle(IPAddress speakerIP)
   return convertShuffle(getPlayMode(speakerIP));
 }
 
+TrackInfo SonosUPnP::getTrackInfo(IPAddress speakerIP, char *uriBuffer, size_t uriBufferSize)
+{
+  TrackInfo trackInfo;
+  if (ethClient.connect(speakerIP, UPNP_PORT))
+  {
+    upnpPost(speakerIP, UPNP_AV_TRANSPORT, p_GetPositionInfoA, "", "", "", 0, 0, "");
+    ethClient_waitForResponse();
+    xPath.reset();
+    char infoBuffer[20] = "";
+    // Track number
+    PGM_P npath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_Track };
+    xPath.setPath(npath, 4);
+    while (ethClient.available() && !xPath.getValue(ethClient.read(), infoBuffer, sizeof(infoBuffer)));
+    trackInfo.number = atoi(infoBuffer);
+    // Track duration
+    PGM_P dpath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackDuration };
+    xPath.setPath(dpath, 4);
+    while (ethClient.available() && !xPath.getValue(ethClient.read(), infoBuffer, sizeof(infoBuffer)));
+    trackInfo.duration = getTimeInSeconds(infoBuffer);
+    // Track URI
+    PGM_P upath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_TrackURI };
+    xPath.setPath(upath, 4);
+    while (ethClient.available() && !xPath.getValue(ethClient.read(), uriBuffer, uriBufferSize));
+    trackInfo.uri = uriBuffer;
+    // Track position
+    PGM_P ppath[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_RelTime };
+    xPath.setPath(ppath, 4);
+    while (ethClient.available() && !xPath.getValue(ethClient.read(), infoBuffer, sizeof(infoBuffer)));
+    trackInfo.position = getTimeInSeconds(infoBuffer);
+
+    ethClient_flush();
+  }
+  else
+  {
+    if (ethernetErrCallback) ethernetErrCallback();
+  }
+  ethClient.stop();  
+  return trackInfo;
+}
+
 uint16_t SonosUPnP::getTrackNumber(IPAddress speakerIP)
 {
   PGM_P path[] = { p_SoapEnvelope, p_SoapBody, p_GetPositionInfoR, p_Track };
