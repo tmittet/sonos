@@ -793,7 +793,7 @@ void SonosUPnP::upnpRenderingControlGet(IPAddress speakerIP, PGM_P action_P, con
 {
   if (ethClient.connect(speakerIP, UPNP_PORT))
   {
-    upnpPost(speakerIP, UPNP_AV_TRANSPORT, action_P, field, value, "", 0, 0, "");
+    upnpPost(speakerIP, UPNP_RENDERING_CONTROL, action_P, field, value, "", 0, 0, "");
     ethClient_waitForResponse();
     xPath.reset();
     xPath.setPath(path, pathSize);
