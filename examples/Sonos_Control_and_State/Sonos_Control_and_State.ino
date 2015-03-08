@@ -16,6 +16,57 @@
 /*                                                                      */
 /* Written by Thomas Mittet (code@lookout.no) January 2015.             */
 /************************************************************************/
+/*
+
+Before you can control you Sonos speakers you need to enter their IP
+addresses and serial numbers below. You can find this information in the
+Sonos Controller application on your PC, Mac or phone by opening the
+"About My Sonos System" menu. For each device you will find information
+similar to this:
+
+PLAY:3: Bedroom
+Serial Number: 00-0A-74-7F-33-A7:8
+Version: 5.2 (build 28183040)
+Hardware Version: 1.8.1.2-2
+IP Address: 192.168.0.203
+
+Given the above, you configure the IP address and serial number (ID):
+IPAddress g_sonosBedroomIP(192, 168, 0, 203);
+const char g_sonosBedroomID[] = "000A747F33A7";
+
+When you are done with the configuration you can send commands to the
+speakers by entering commands in the Arduino Serial Monitor. The test
+sketch will mainly control the speaker named Living Room. The other
+speakers are only there to be able to test the group speakers function.
+
+Here's a list of the commands that are implemented in the test sketch:
+
+pl = Play
+pa = Pause
+st = Stop
+pr = Previous track
+nx = Next track
+
+fi = Play test file (file path must be changed for this to work)
+ht = Play http stream (you need access to the music service WIMP)
+ra = Play radio (works if your speakers are connected to the internet)
+li = Play line in (only works if the device has an AUX input)
+
+gr = Group speakers (Living Room, Bathroom and Bedroom)
+ug = Ungroups speakers
+
+re = Toggle repeat
+sh = Toggle shuffle
+lo = Toggle loudness
+mu = Toggle mute
+
+52 = Set volume level 52 (range is 00 - 99)
+b5 = Set bass level -5 (range is 0 to -9)
+B5 = Set bass level +5 (range is 0 to +9)
+t3 = Set treble level -3
+T0 = Set treble level normal
+
+*/
 
 #include <SPI.h>
 #include <Ethernet.h>
@@ -35,10 +86,13 @@ SonosUPnP g_sonos = SonosUPnP(g_ethClient, ethConnectError);
 byte g_mac[] = {0x54, 0x48, 0x4F, 0x4D, 0x41, 0x53};
 IPAddress g_ethernetStaticIP(192, 168, 0, 123);
 
+// Living room
 IPAddress g_sonosLivingrIP(192, 168, 0, 201);
 const char g_sonosLivingrID[] = "000111111111";
+// Bathroom
 IPAddress g_sonosBathroomIP(192, 168, 0, 202);
 const char g_sonosBathroomID[] = "000222222222";
+// Bedroom
 IPAddress g_sonosBedroomIP(192, 168, 0, 203);
 const char g_sonosBedroomID[] = "000333333333";
 
