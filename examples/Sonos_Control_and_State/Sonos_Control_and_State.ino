@@ -119,7 +119,9 @@ void loop()
   // Sonos state polling
   if (g_sonosLastStateUpdate > millis() || millis() > g_sonosLastStateUpdate + SONOS_STATUS_POLL_DELAY_MS)
   {
-    byte source = g_sonos.getSource(g_sonosLivingrIP);
+    char uri[25] = "";
+    TrackInfo track = g_sonos.getTrackInfo(g_sonosLivingrIP, uri, sizeof(uri));
+    byte source = g_sonos.getSourceFromURI(track.uri);
     switch (source)
     {
       case SONOS_SOURCE_FILE:
@@ -144,9 +146,11 @@ void loop()
     if (source == SONOS_SOURCE_FILE || source == SONOS_SOURCE_HTTP)
     {
       Serial.print(", track = ");
-      Serial.println(g_sonos.getTrackNumber(g_sonosLivingrIP), DEC);
-      //Serial.print(", pos = ");
-      //Serial.println(g_sonos.getTrackPositionInSeconds(g_sonosLivingrIP), DEC);
+      Serial.print(track.number, DEC);
+      Serial.print(", pos = ");
+      Serial.print(track.position, DEC);
+      Serial.print(" of ");
+      Serial.println(track.duration, DEC);
     }
     g_sonosLastStateUpdate = millis();
   }
