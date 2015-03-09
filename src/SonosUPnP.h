@@ -233,14 +233,14 @@
 #define SONOS_TAG_GET_TRANSPORT_SETTINGS "GetTransportSettings"
 #define SONOS_TAG_GET_TRANSPORT_SETTINGS_RESPONSE "u:GetTransportSettingsResponse"
 #define SONOS_TAG_PLAY_MODE "PlayMode"
-#define SONOS_PLAY_MODE_NORMAL 1
+#define SONOS_PLAY_MODE_NORMAL B00
 #define SONOS_PLAY_MODE_NORMAL_VALUE "NORMAL"
-#define SONOS_PLAY_MODE_REPEAT 2
+#define SONOS_PLAY_MODE_REPEAT B01
 #define SONOS_PLAY_MODE_REPEAT_VALUE "REPEAT_ALL"
-#define SONOS_PLAY_MODE_SHUFFLE_REPEAT 3
-#define SONOS_PLAY_MODE_SHUFFLE_REPEAT_VALUE "SHUFFLE"
-#define SONOS_PLAY_MODE_SHUFFLE 4
+#define SONOS_PLAY_MODE_SHUFFLE B10
 #define SONOS_PLAY_MODE_SHUFFLE_VALUE "SHUFFLE_NOREPEAT"
+#define SONOS_PLAY_MODE_SHUFFLE_REPEAT B11
+#define SONOS_PLAY_MODE_SHUFFLE_REPEAT_VALUE "SHUFFLE"
 // Set Play Mode:
 #define SONOS_TAG_SET_PLAY_MODE "SetPlayMode"
 #define SONOS_TAG_NEW_PLAY_MODE "NewPlayMode"
@@ -345,25 +345,22 @@ class SonosUPnP
     void upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P);
     void upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *value);
     void upnpSet(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *valueA, const char *valueB, PGM_P extraStart_P, PGM_P extraEnd_P, const char *extraValue);
-    void upnpPost(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *valueA, const char *valueB, PGM_P extraStart_P, PGM_P extraEnd_P, const char *extraValue);
+    bool upnpPost(IPAddress ip, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *valueA, const char *valueB, PGM_P extraStart_P, PGM_P extraEnd_P, const char *extraValue);
     const char *getUpnpService(uint8_t upnpMessageType);
     const char *getUpnpEndpoint(uint8_t upnpMessageType);
     void ethClient_write(const char *data);
     void ethClient_write_P(PGM_P data_P, char *buffer, size_t bufferSize);
-    void ethClient_waitForResponse();
-    void ethClient_flush();
+    void ethClient_stop();
 
     #ifndef SONOS_WRITE_ONLY_MODE
 
     MicroXPath_P xPath;
-    void upnpAvTransportGet(IPAddress speakerIP, PGM_P action_P, PGM_P *path, size_t pathSize, char *resultBuffer, size_t resultBufferSize);
-    void upnpRenderingControlGet(IPAddress speakerIP, PGM_P action_P, const char *field, const char *value, PGM_P *path, size_t pathSize, char *resultBuffer, size_t resultBufferSize);
+    void ethClient_xPath(PGM_P *path, uint8_t pathSize, char *resultBuffer, size_t resultBufferSize);
+    void upnpGetString(IPAddress speakerIP, uint8_t upnpMessageType, PGM_P action_P, const char *field, const char *value, PGM_P *path, uint8_t pathSize, char *resultBuffer, size_t resultBufferSize);
     uint32_t getTimeInSeconds(const char *time);
+    uint32_t uiPow(uint16_t base, uint16_t exp);
     uint8_t convertState(const char *input);
     uint8_t convertPlayMode(const char *input);
-    uint8_t convertPlayMode(bool repeat, bool shuffle);
-    bool convertRepeat(uint8_t playMode);
-    bool convertShuffle(uint8_t playMode);
 
     #endif
 };
