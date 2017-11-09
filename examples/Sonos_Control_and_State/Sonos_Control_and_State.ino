@@ -118,6 +118,22 @@ void loop()
   // Sonos state polling
   if (g_sonosLastStateUpdate > millis() || millis() > g_sonosLastStateUpdate + SONOS_STATUS_POLL_DELAY_MS)
   {
+    byte playerState = g_sonos.getState(g_sonosLivingrIP);
+    switch (playerState)
+    {
+      case SONOS_STATE_PLAYING:
+        Serial.print("Playing, ");
+        break;
+      case SONOS_STATE_PAUSED:
+        Serial.print("Paused, ");
+        break;
+      case SONOS_STATE_STOPPED:
+        Serial.print("Stopped, ");
+        break;
+      default:
+        Serial.print("Unknown, ");
+        break;
+    }
     char uri[25] = "";
     TrackInfo track = g_sonos.getTrackInfo(g_sonosLivingrIP, uri, sizeof(uri));
     byte source = g_sonos.getSourceFromURI(track.uri);
