@@ -21,8 +21,8 @@
 Before you can control you Sonos speakers you need to enter their IP
 addresses and serial numbers below. You can find this information in the
 Sonos Controller application on your PC, Mac or phone by opening the
-"About My Sonos System" menu. For each device you will find information
-similar to this:
+"About My Sonos System" dialog from the menu. For each device you will
+find information similar to the following:
 
 PLAY:3: Bedroom
 Serial Number: 00-0A-74-7F-33-A7:8
