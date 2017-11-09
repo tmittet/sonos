@@ -81,6 +81,10 @@ T0 = Set treble level normal
 #define ETHERNET_ERROR_CONNECT "E: Connect"
 
 EthernetClient g_ethClient;
+void ethConnectError()
+{
+  Serial.println(ETHERNET_ERROR_CONNECT);
+}
 SonosUPnP g_sonos = SonosUPnP(g_ethClient, ethConnectError);
 
 byte g_mac[] = {0x54, 0x48, 0x4F, 0x4D, 0x41, 0x53};
@@ -106,11 +110,6 @@ void setup()
     Ethernet.begin(g_mac, g_ethernetStaticIP);
   }
   Serial.begin(9600);
-}
-
-void ethConnectError()
-{
-  Serial.println(ETHERNET_ERROR_CONNECT);
 }
 
 void loop()
