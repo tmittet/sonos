@@ -10,9 +10,14 @@ functions: getting source, player state, track number, track position, volume
 and more. The library is relatively compact and has a small enough memory
 footprint to run on the Arduino Uno and Duemilanove.
 
-**Getting Started:** 
+**ESP8266:**  
+For an ESP8266 port, have a look this fork:
+[github.com/antonmeyer/sonos](https://github.com/antonmeyer/sonos)
+
+**Getting Started:**
 - Download and add this library to your Ardiono libraries folder.
-- Download and add the MicroXPath library (github.com/tmittet/microxpath).
+- Download and add the MicroXPath library
+([github.com/tmittet/microxpath](https://github.com/tmittet/microxpath)).
 
 **Note:**  
 If you download the libraries as ZIP files from GitHub, "-master" will be added
