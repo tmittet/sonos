@@ -22,8 +22,12 @@
 
 //#define SONOS_WRITE_ONLY_MODE
 
-#include "Arduino.h"
-#include "avr/pgmspace.h"
+#include <Arduino.h>
+#if (defined(__AVR__))
+  #include <avr/pgmspace.h>
+#else
+  #include <pgmspace.h>
+#endif
 #ifndef SONOS_WRITE_ONLY_MODE
 #include "../../MicroXPath/src/MicroXPath_P.h"
 #endif
