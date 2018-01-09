@@ -510,7 +510,7 @@ bool SonosUPnP::getMute(IPAddress speakerIP)
 
 uint8_t SonosUPnP::getVolume(IPAddress speakerIP)
 {
-  getVolume(speakerIP, SONOS_CHANNEL_MASTER);
+  return getVolume(speakerIP, SONOS_CHANNEL_MASTER);
 }
 
 uint8_t SonosUPnP::getVolume(IPAddress speakerIP, const char *channel)
