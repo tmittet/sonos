@@ -123,6 +123,9 @@
 #define SONOS_TAG_SET_LED_STATE "SetLEDState"
 #define SONOS_TAG_DESIRED_LED_STATE "DesiredLEDState"
 
+#define SONOS_TAG_CONFIGURE_SLEEP_TIMER "ConfigureSleepTimer"
+#define SONOS_TAG_NEW_SLEEP_TIMER_DURATION "NewSleepTimerDuration"
+
 // Playlist & Queue
 /*
 <u:AddURIToQueueResponse xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
@@ -307,6 +310,7 @@ class SonosUPnP
     void addPlaylistToQueue(IPAddress speakerIP, uint16_t playlistIndex);
     void addTrackToQueue(IPAddress speakerIP, const char *scheme, const char *address);
     void removeAllTracksFromQueue(IPAddress speakerIP);
+	void NewSleepTimerDuration(IPAddress speakerIP, uint8_t hour, uint8_t minute, uint8_t second);
     
     #ifndef SONOS_WRITE_ONLY_MODE
     
