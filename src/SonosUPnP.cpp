@@ -59,6 +59,7 @@ const char p_RadioMetaFullStart[] PROGMEM = SONOS_RADIO_META_FULL_START;
 const char p_RadioMetaFullEnd[] PROGMEM = SONOS_RADIO_META_FULL_END;
 const char p_BecomeCoordinatorOfStandaloneGroup[] PROGMEM = SONOS_TAG_BECOME_COORDINATOR_OF_STANDALONE_GROUP;
 const char p_SetLEDState[] PROGMEM = SONOS_TAG_SET_LED_STATE;
+const char p_ConfigureSleepTimer[] PROGMEM = SONOS_TAG_CONFIGURE_SLEEP_TIMER;
 
 const char p_AddURIToQueue[] PROGMEM = SONOS_TAG_ADD_URI_TO_QUEUE;
 const char p_SavedQueues[] PROGMEM = SONOS_SAVED_QUEUES;
@@ -281,6 +282,12 @@ void SonosUPnP::setStatusLight(IPAddress speakerIP, bool state)
     speakerIP, UPNP_DEVICE_PROPERTIES, p_SetLEDState,
     SONOS_TAG_DESIRED_LED_STATE, state ? "On" : "Off");
 }
+
+void SonosUPnP::NewSleepTimerDuration(IPAddress speakerIP, uint8_t hour, uint8_t minute, uint8_t second)
+{
+	char time[11];
+	sprintf_P(time, p_TimeFormatTemplate, hour, minute, second);
+	upnpSet(speakerIP, UPNP_AV_TRANSPORT, p_ConfigureSleepTimer, SONOS_TAG_NEW_SLEEP_TIMER_DURATION, time);
 
 void SonosUPnP::addPlaylistToQueue(IPAddress speakerIP, uint16_t playlistIndex)
 {

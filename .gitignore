@@ -1,0 +1,7 @@
+﻿################################################################################
+# Diese .gitignore-Datei wurde von Microsoft(R) Visual Studio automatisch erstellt.
+################################################################################
+
+/.vs/sonos/v16/.suo
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite
